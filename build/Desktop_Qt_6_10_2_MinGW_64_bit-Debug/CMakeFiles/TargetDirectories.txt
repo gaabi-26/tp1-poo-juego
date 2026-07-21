@@ -1,9 +1,0 @@
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/TPpoo2da.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/install.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/TPpoo2da_autogen_timestamp_deps.dir
-C:/Users/ferte/OneDrive/Desktop/Facu 2026/POO/Tp Poo/TPpoo2da/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/TPpoo2da_autogen.dir

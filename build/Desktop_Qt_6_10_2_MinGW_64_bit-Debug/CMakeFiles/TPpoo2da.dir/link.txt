@@ -1,3 +1,0 @@
-D:\Qt\Tools\CMake_64\bin\cmake.exe -E rm -f CMakeFiles\TPpoo2da.dir/objects.a
-D:\Qt\Tools\mingw1310_64\bin\ar.exe qc CMakeFiles\TPpoo2da.dir/objects.a @CMakeFiles\TPpoo2da.dir\objects1.rsp
-D:\Qt\Tools\mingw1310_64\bin\g++.exe -g -mwindows -Wl,--whole-archive CMakeFiles\TPpoo2da.dir/objects.a -Wl,--no-whole-archive -o TPpoo2da.exe -Wl,--out-implib,libTPpoo2da.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\TPpoo2da.dir\linkLibs.rsp
