@@ -26,6 +26,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         TipoElemento.h
         carta.h carta.cpp
         jugador.h jugador.cpp
+        jugadorhumano.h jugadorhumano.cpp
+        jugadoria.h jugadoria.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TPpoo2da APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
