@@ -31,6 +31,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TPpoo2da
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ClaseEstrategiaIA.h ClaseEstrategiaIA.cpp
+        claseiabasica.h claseiabasica.cpp
+        claseiaintermedia.h claseiaintermedia.cpp
+        claseiaavanzada.h claseiaavanzada.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TPpoo2da APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
