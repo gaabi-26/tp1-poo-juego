@@ -23,7 +23,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TPpoo2da
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        TipoElemento.h
+        tipoelemento.h
         carta.h carta.cpp
         jugador.h jugador.cpp
         jugadorhumano.h jugadorhumano.cpp

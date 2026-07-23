@@ -1,4 +1,0 @@
-#ifndef TIPOELEMENTO_H
-#define TIPOELEMENTO_H
-
-#endif // TIPOELEMENTO_H

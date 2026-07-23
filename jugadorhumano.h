@@ -1,10 +1,16 @@
 #ifndef JUGADORHUMANO_H
 #define JUGADORHUMANO_H
 
-class JugadorHumano
+#include "jugador.h"
+
+class JugadorHumano : public Jugador
 {
 public:
-    JugadorHumano();
+
+    JugadorHumano(std::string nombre);
+
+    // Devolver una referencia a la carta elegida
+    Carta& seleccionarCarta() override;
 };
 
 #endif // JUGADORHUMANO_H
