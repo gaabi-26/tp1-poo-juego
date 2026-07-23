@@ -13,10 +13,18 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    main.cpp
+            mainwindow.cpp
+            mainwindow.h
+            mainwindow.ui
+            ClaseEstrategiaIA.cpp
+            ClaseEstrategiaIA.h
+            claseiaavanzada.h
+            claseiaavanzada.cpp
+            claseiabasica.h
+            claseiabasica.cpp
+            claseiaintermedia.h
+            claseiaintermedia.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -38,6 +46,7 @@ else()
     else()
         add_executable(TPpoo2da
             ${PROJECT_SOURCES}
+
         )
     endif()
 endif()
