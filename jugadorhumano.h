@@ -9,10 +9,13 @@
 // originales.
 class JugadorHumano : public Jugador
 {
+protected:
+    Carta* CartaActiva = nullptr;
 public:
     explicit JugadorHumano(std::string nombre);
 
     Carta& seleccionarCarta(Carta *cartaOponente) override;
+    void setCartaActiva(Carta* carta);
 };
 
 #endif // JUGADORHUMANO_H

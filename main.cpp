@@ -1,18 +1,6 @@
-/*
 #include "mainwindow.h"
 
 #include <QApplication>
-
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return QCoreApplication::exec();
-}
-*/
-
-#include <iostream>
 
 #include "ConfiguracionDanio.h"
 #include "MotorCombate.h"
@@ -21,28 +9,12 @@ int main(int argc, char *argv[])
 #include "claseiaintermedia.h"
 #include "Partida.h"
 
-using namespace std;
-
-int main()
+int main(int argc, char *argv[])
 {
-    ConfiguracionDanio configuracion;
-    MotorCombate motor(configuracion);
+    QApplication a(argc, argv);
 
-    ClaseIAIntermedia estrategiaIA(configuracion);
+    MainWindow w(nullptr);
+    w.show();
 
-    JugadorHumano jugadorHumano("Jugador");
-    JugadorIA jugadorIA("CPU", &estrategiaIA);
-
-    Partida partida(&jugadorHumano, &jugadorIA, motor);
-
-    partida.iniciarPartida(5);
-
-    if (partida.hayGanador())
-    {
-        cout << "\nGano: "
-             << partida.obtenerGanador()->getNombre()
-             << endl;
-    }
-
-    return 0;
+    return a.exec();
 }

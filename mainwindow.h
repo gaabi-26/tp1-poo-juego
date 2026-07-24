@@ -9,15 +9,18 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+class Partida;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow() override;
+    explicit MainWindow(Partida* partida, QWidget *parent = nullptr);
+    ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    Partida* partida;
 };
 #endif // MAINWINDOW_H
