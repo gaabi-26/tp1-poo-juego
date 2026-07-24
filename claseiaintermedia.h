@@ -1,7 +1,7 @@
 #ifndef CLASEIAINTERMEDIA_H
 #define CLASEIAINTERMEDIA_H
 
-#include "EstrategiaIA.h"
+#include "ClaseEstrategiaIA.h"
 #include "ConfiguracionDanio.h"
 
 class ClaseIAIntermedia : public EstrategiaIA

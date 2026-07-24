@@ -6,19 +6,19 @@ using namespace std;
 
 
 Partida::Partida(Jugador *jugadorHumano, Jugador *jugadorIA, const MotorCombate &motor)
+    : m_motor(motor)
 {
     m_jugadorHumano = jugadorHumano;
     m_jugadorIA = jugadorIA;
-    m_motor = motor;
 
     m_cartaActivaHumano = nullptr;
     m_cartaActivaIA = nullptr;
 
     srand(time(NULL));
 
-    m_tiposDisponibles.push_back(TipoElemento("Agua", 0));
-    m_tiposDisponibles.push_back(TipoElemento("Tierra", 1));
-    m_tiposDisponibles.push_back(TipoElemento("Fuego", 2));
+    m_tiposDisponibles.push_back(TipoElemento::Agua);
+    m_tiposDisponibles.push_back(TipoElemento::Fuego);
+    m_tiposDisponibles.push_back(TipoElemento::Tierra);
 }
 
 

@@ -1,10 +1,10 @@
 #include "ConfiguracionDanio.h"
 
 namespace {
-// Indices: 0=Agua, 1=Tierra, 2=Fuego
+// Indices: deben coincidir con el orden del enum TipoElemento (Agua=0, Fuego=1, Tierra=2)
 const int AGUA = 0;
-const int TIERRA = 1;
-const int FUEGO = 2;
+const int FUEGO = 1;
+const int TIERRA = 2;
 }
 
 ConfiguracionDanio::ConfiguracionDanio()
@@ -24,6 +24,10 @@ ConfiguracionDanio::ConfiguracionDanio()
     m_tablaDanio[AGUA][TIERRA]  = 20;
     m_tablaDanio[FUEGO][AGUA]   = 20;
     m_tablaDanio[TIERRA][AGUA]  = 40;
+    m_tablaDanio[TIERRA][TIERRA]  = 10;
+    m_tablaDanio[FUEGO][FUEGO]  = 10;
+    m_tablaDanio[AGUA][AGUA]  = 10;
+
 }
 
 void ConfiguracionDanio::configurarDanio(int atacante, int defensor, int porcentaje)

@@ -14,70 +14,68 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
     main.cpp
-            mainwindow.cpp
-            mainwindow.h
-            mainwindow.ui
-            ClaseEstrategiaIA.cpp
-            ClaseEstrategiaIA.h
-            claseiaavanzada.h
-            claseiaavanzada.cpp
-            claseiabasica.h
-            claseiabasica.cpp
-            claseiaintermedia.h
-            claseiaintermedia.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
+
+    ClaseEstrategiaIA.cpp
+    ClaseEstrategiaIA.h
+    claseiaavanzada.cpp
+    claseiaavanzada.h
+    claseiabasica.cpp
+    claseiabasica.h
+    claseiaintermedia.cpp
+    claseiaintermedia.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TPpoo2da
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-<<<<<<< HEAD
 
-        Partida.h Partida.cpp
-        MotorCombate.h MotorCombate.cpp
-        ConfiguracionDanio.h ConfiguracionDanio.cpp
-        configuraciondanio.h configuraciondanio.cpp
+        Partida.h
+        Partida.cpp
 
-        ClaseEstrategiaIA.h ClaseEstrategiaIA.cpp
-        claseiabasica.h claseiabasica.cpp
-        claseiaintermedia.h claseiaintermedia.cpp
-        claseiaavanzada.h claseiaavanzada.cpp
+        MotorCombate.h
+        MotorCombate.cpp
 
-=======
+        ConfiguracionDanio.h
+        ConfiguracionDanio.cpp
+        configuraciondanio.h
+        configuraciondanio.cpp
+
         tipoelemento.h
-        carta.h carta.cpp
-        jugador.h jugador.cpp
-        jugadorhumano.h jugadorhumano.cpp
-        jugadoria.h jugadoria.cpp
->>>>>>> gab
+
+        carta.h
+        carta.cpp
+
+        jugador.h
+        jugador.cpp
+
+        jugadorhumano.h
+        jugadorhumano.cpp
+
+        jugadoria.h
+        jugadoria.cpp
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET TPpoo2da APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
         add_library(TPpoo2da SHARED
             ${PROJECT_SOURCES}
         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(TPpoo2da
             ${PROJECT_SOURCES}
-
         )
     endif()
 endif()
 
 target_link_libraries(TPpoo2da PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.TPpoo2da)
+    set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.TPpoo2da)
 endif()
+
 set_target_properties(TPpoo2da PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
@@ -87,6 +85,7 @@ set_target_properties(TPpoo2da PROPERTIES
 )
 
 include(GNUInstallDirs)
+
 install(TARGETS TPpoo2da
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

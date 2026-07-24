@@ -1,7 +1,7 @@
 #ifndef CONFIGURACIONDANIO_H
 #define CONFIGURACIONDANIO_H
 
-// Indices: 0 = Agua, 1 = Tierra, 2 = Fuego.
+// Indices: 0 = Agua, 1 = Fuego, 2 = Tierra (igual que el enum TipoElemento).
 // TablaDanio[atacante][defensor] = porcentaje de daño infligido.
 class ConfiguracionDanio
 {

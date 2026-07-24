@@ -2,7 +2,7 @@
 #define JUGADORIA_H
 
 #include "jugador.h"
-#include "claseestrategiaia.h"
+#include "ClaseEstrategiaIA.h"
 
 class JugadorIA : public Jugador
 {
@@ -14,7 +14,7 @@ public:
 
     JugadorIA(std::string nombre, EstrategiaIA* estrategia);
 
-    Carta& seleccionarCarta() override;
+    Carta& seleccionarCarta(Carta* cartaOponente) override;
 
     EstrategiaIA* getEstrategia() const;
 };

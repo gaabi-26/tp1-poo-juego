@@ -2,9 +2,9 @@
 #define PARTIDA_H
 
 #include <vector>
-#include "Jugador.h"
+#include "jugador.h"
 #include "MotorCombate.h"
-#include "TipoElemento.h"
+#include "tipoelemento.h"
 
 // Coordinador central del juego: inicializa jugadores y cartas, ejecuta
 // el ciclo de rondas y determina al ganador. No implementa logica de

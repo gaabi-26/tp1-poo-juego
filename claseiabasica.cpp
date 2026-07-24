@@ -5,9 +5,9 @@
 
 
 Carta claseIAbasica::elegirCarta(
-vector<Carta> cartasDisponibles, Carta cartaOponente) {
-    if(cartasDisponibles.emepty()){ /// comprueba que haya cartas disponibles
-        trow std::runtime_error(
+    vector<Carta> cartasDisponibles, Carta cartaOponente) {
+    if(cartasDisponibles.empty()){ /// comprueba que haya cartas disponibles
+        throw std::runtime_error(
             "la IA basica no tiene cartas disponibles");
     }
     int posicionAleatoria= std::rand() % cartasDisponibles.size(); //seleccion aleatoria de cartas, poner en main srand(time(nullptr))

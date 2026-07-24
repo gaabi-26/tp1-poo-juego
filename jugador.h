@@ -20,7 +20,9 @@ public:
 
     virtual ~Jugador() = default;
 
-    virtual Carta& seleccionarCarta() = 0;
+    // cartaOponente: carta activa del rival (puede ser nullptr si aun no eligio).
+    // Se pasa por si la estrategia de seleccion necesita conocerla (ej. IA).
+    virtual Carta& seleccionarCarta(Carta *cartaOponente) = 0;
 
     bool tieneCartasVivas() const;
 

@@ -1,7 +1,7 @@
 #ifndef CLASEIABASICA_H
 #define CLASEIABASICA_H
 
-#include "EstrategiaIA.h"
+#include "ClaseEstrategiaIA.h"
 
 class claseIAbasica : public EstrategiaIA
 {

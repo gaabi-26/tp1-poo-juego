@@ -16,5 +16,5 @@ void MotorCombate::ejecutarTurno(Carta &carta1, Carta &carta2)
 
 int MotorCombate::calcularDanio(const Carta &atacante, const Carta &defensor) const
 {
-    return m_configuracion.obtenerDanio(atacante.getTipo().getIndice(),defensor.getTipo().getIndice());
+    return m_configuracion.obtenerDanio(static_cast<int>(atacante.getTipo()),static_cast<int>(defensor.getTipo()));
 }

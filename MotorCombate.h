@@ -1,7 +1,7 @@
 #ifndef MOTORCOMBATE_H
 #define MOTORCOMBATE_H
 
-#include "Carta.h"
+#include "carta.h"
 #include "ConfiguracionDanio.h"
 
 // Encapsula la mecanica de combate: calculo y aplicacion de daño.

@@ -1,22 +1,58 @@
 #include "jugadorhumano.h"
-
+#include <iostream>
+using namespace std;
 JugadorHumano::JugadorHumano(std::string nombre)
     : Jugador(nombre)
 {
-
 }
 
-Carta& JugadorHumano::seleccionarCarta()
+Carta& JugadorHumano::seleccionarCarta(Carta *cartaOponente)
 {
-    // Por ahora devolvemos la primera carta viva
-    // Implementar ...
-    for (Carta& carta : Cartas)
+    (void)cartaOponente;
+
+    cout << "\n" << Nombre << ", elegi tu proxima carta:\n";
+
+    vector<int> indicesVivos;
+
+    for(size_t i = 0; i < Cartas.size(); i++)
     {
-        if (carta.estaViva())
+        if(Cartas[i].estaViva())
         {
-            return carta;
+            indicesVivos.push_back(i);
+
+            cout << "  [" << indicesVivos.size() - 1
+                 << "] Energia: "
+                 << Cartas[i].getEnergia()
+                 << "\n";
         }
     }
 
-    return Cartas.front(); // No tendria que llegar hasta aca. Ya que dicho metodo solo se llama si hay cartas vivas
+    if(indicesVivos.empty())
+    {
+        return Cartas.front();
+    }
+
+    int opcion;
+
+    while(true)
+    {
+        cout << "Opcion: ";
+
+        if(!(cin >> opcion))
+        {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Opcion invalida.\n";
+            continue;
+        }
+
+        if(opcion >= 0 && opcion < (int)indicesVivos.size())
+        {
+            break;
+        }
+
+        cout << "Opcion invalida.\n";
+    }
+
+    return Cartas[indicesVivos[opcion]];
 }
