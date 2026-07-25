@@ -5,7 +5,7 @@
 
 
 Carta claseIAbasica::elegirCarta(
-    vector<Carta> cartasDisponibles, Carta cartaOponente) {
+vector<Carta> cartasDisponibles, Carta cartaOponente) {
     if(cartasDisponibles.empty()){ /// comprueba que haya cartas disponibles
         throw std::runtime_error(
             "la IA basica no tiene cartas disponibles");
