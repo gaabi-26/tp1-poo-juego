@@ -6,59 +6,81 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>243</width>
-    <height>202</height>
+    <width>138</width>
+    <height>138</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="nombreTipo">
+  <property name="styleSheet">
+   <string notr="true">QFrame
+{
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+QFrame:hover
+{
+    border: 3px solid #2E86DE;
+}</string>
+  </property>
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>30</y>
-     <width>91</width>
-     <height>41</height>
+     <x>10</x>
+     <y>10</y>
+     <width>111</width>
+     <height>111</height>
     </rect>
    </property>
-   <property name="text">
-    <string>nombre</string>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
-   <property name="scaledContents">
-    <bool>false</bool>
+   <property name="frameShape">
+    <enum>QFrame::Shape::StyledPanel</enum>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignmentFlag::AlignCenter</set>
+   <property name="frameShadow">
+    <enum>QFrame::Shadow::Raised</enum>
    </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cantidadEnergia">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>120</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>energia</string>
-   </property>
-   <property name="scaledContents">
-    <bool>false</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignmentFlag::AlignCenter</set>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="nombreTipo">
+      <property name="text">
+       <string>nombre</string>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="cantidadEnergia">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>energia</string>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
