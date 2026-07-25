@@ -11,7 +11,7 @@ if (cartasDisponibles.empty()){
 }
 
 int energiaOponente = cartaOponente.getEnergia();
-///VERIFICAR. ver si el getIndice va a estar dentro de TipoElemento
+
 int indiceDefensor=static_cast<int>(cartaOponente.getTipo());
 
 int posicionCartaEliminadora=-1;

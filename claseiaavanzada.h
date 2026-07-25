@@ -7,7 +7,7 @@
 class ClaseIAAvanzada : public EstrategiaIA
 {
 private:
-    configuracionDanio& configuracion;
+    ConfiguracionDanio& configuracion;
 public:
     ClaseIAAvanzada(ConfiguracionDanio& configuracion);
 

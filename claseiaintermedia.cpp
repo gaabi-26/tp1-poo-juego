@@ -3,12 +3,12 @@
 #include <stdexcept>
 
 ClaseIAIntermedia::ClaseIAIntermedia(
-    configuracionDanio& configuracion):configuracion(configuracion  ){}
+    ConfiguracionDanio& configuracion):configuracion(configuracion  ){}
 ///el constructor recibe el objeto con la tabla de daños y guarda una referencia a ese objeto
 
 Carta ClaseIAIntermedia::elegirCarta(vector<Carta> cartasDisponibles, Carta cartaOponente)
 {
-    if(cartasDisponibles.empety()){
+    if(cartasDisponibles.empty()){
         throw std::runtime_error(
             "la IA intermedia no tiene cartas disponibles");
     }
@@ -19,7 +19,7 @@ Carta ClaseIAIntermedia::elegirCarta(vector<Carta> cartasDisponibles, Carta cart
     for(int i=0;i<static_cast<int>(cartasDisponibles.size());i++){ ///para recorrer las cartas disponibles de la IA
         int indiceAtacante= static_cast<int>(cartasDisponibles[i].getTipo());
 
-        int danioActual=configuracion.obtenerDanio(indiceAtacante indiceDefensor);
+        int danioActual=configuracion.obtenerDanio(indiceAtacante, indiceDefensor);
         if(danioActual > mayorDanio){  /// compara el danio de la carta actual con la carta de mayor danio
             mayorDanio = danioActual;
             posicionMejorCarta=i; /// guarda la posicion de la mejor carga
