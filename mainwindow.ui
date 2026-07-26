@@ -28,8 +28,8 @@
    <widget class="QPushButton" name="btnRonda">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>20</y>
+      <x>870</x>
+      <y>450</y>
       <width>121</width>
       <height>51</height>
      </rect>
@@ -41,7 +41,7 @@
    <widget class="QPushButton" name="btnVolverMenu">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>860</x>
       <y>30</y>
       <width>131</width>
       <height>51</height>
@@ -51,6 +51,16 @@
      <string>Volver al Menu</string>
     </property>
    </widget>
+   <widget class="QWidget" name="widgetCartasIA" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>771</width>
+      <height>191</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -58,7 +68,7 @@
      <x>0</x>
      <y>0</y>
      <width>1053</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -34,6 +34,7 @@ private:
     Partida* partida;
     std::vector<Carta> cartas;
     std::vector<CartaWidget*> widgetsCartas;
+    std::vector<CartaWidget*> widgetsCartasIA;
     CartaWidget* cartaSeleccionada = nullptr;
     MenuPrincipal *menu = nullptr;
 };

@@ -91,14 +91,29 @@ Jugador* Partida::obtenerGanador() const
 // Asigna la carta seleccionada como activa para el jugador humano.
 // Realiza una conversión segura de tipo (dynamic_cast) para asegurar que
 // el jugador actual es de tipo JugadorHumano antes de actualizar su estado.
+
 void Partida::seleccionarCartaHumano(Carta* carta)
 {
+    // Si la carta no existe o ya está muerta,
+    // no hacemos nada.
+    if (carta == nullptr || !carta->estaViva())
+    {
+    return;
+    }
+
+    // La partida también debe saber cuál
+    // es la carta activa del jugador.
+    m_cartaActivaHumano = carta;
+    // Además actualizamos la carta activa
+    // dentro del JugadorHumano.
     JugadorHumano* humano = dynamic_cast<JugadorHumano*>(m_jugadorHumano);
+
     if (humano != nullptr)
     {
-        humano->setCartaActiva(carta);
+     humano->setCartaActiva(carta);
     }
 }
+
 
 Jugador* Partida::obtenerJugadorHumano() const { return m_jugadorHumano; }
 Jugador* Partida::obtenerJugadorIA() const { return m_jugadorIA; }

@@ -6,6 +6,7 @@
 #include "Partida.h"
 #include <QDebug>
 #include <QMessageBox>
+#include <QHBoxLayout>
 
 MainWindow::MainWindow(Partida *partida, QWidget *parent)
     : QMainWindow(parent),
@@ -13,6 +14,19 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
     partida(partida)
 {
     ui->setupUi(this);
+
+    ///esto se agrega por un incoveniente con qtdesigner
+    // Creamos un layout horizontal dentro del widget reservado
+    // para mostrar las cartas de la IA.
+    QHBoxLayout *layoutCartasIA =
+        new QHBoxLayout(ui->widgetCartasIA);
+
+    // Quitamos los márgenes internos del layout para aprovechar
+    // mejor el espacio disponible dentro del widget.
+    layoutCartasIA->setContentsMargins(0, 0, 0, 0);
+
+    // Dejamos una separación de 10 píxeles entre las cartas.
+    layoutCartasIA->setSpacing(10);
 
     // Antes: se creaban 5 cartas hardcodeadas que no eran las de la partida.
     // Ahora: se usan las cartas reales del jugador humano, para que el
@@ -29,6 +43,17 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
                 &MainWindow::seleccionarCarta);
 
         ui->horizontalLayout_2->addWidget(widget);
+    }
+
+    for (Carta &carta : partida->obtenerJugadorIA()->getCartas())
+    {
+        CartaWidget *widget = new CartaWidget(this);
+
+        widget->setCarta(&carta);
+
+        widgetsCartasIA.push_back(widget);
+
+       layoutCartasIA->addWidget(widget);
     }
 }
 
@@ -71,6 +96,11 @@ void MainWindow::on_btnRonda_clicked()
 
     // Refrescar todas las cartas para que se vea la energia actualizada.
     for (CartaWidget* w : widgetsCartas)
+    {
+        w->actualizar();
+    }
+
+    for (CartaWidget* w : widgetsCartasIA)
     {
         w->actualizar();
     }
