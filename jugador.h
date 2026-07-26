@@ -30,7 +30,7 @@ public:
 
     std::string getNombre() const;
 
-    std::vector<Carta> getCartas() const;
+    std::vector<Carta>& getCartas();
 
     void setCartas(const std::vector<Carta>& cartas);
 };

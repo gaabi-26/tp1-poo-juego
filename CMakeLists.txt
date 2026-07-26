@@ -17,72 +17,40 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-
-    ClaseEstrategiaIA.cpp
-    ClaseEstrategiaIA.h
-    claseiaavanzada.cpp
-    claseiaavanzada.h
-    claseiabasica.cpp
-    claseiabasica.h
-    claseiaintermedia.cpp
-    claseiaintermedia.h
+    ClaseEstrategiaIA.cpp ClaseEstrategiaIA.h
+    claseiaavanzada.cpp claseiaavanzada.h
+    claseiabasica.cpp claseiabasica.h
+    claseiaintermedia.cpp claseiaintermedia.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TPpoo2da
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-
-        Partida.h
-        Partida.cpp
-
-        MotorCombate.h
-        MotorCombate.cpp
-
-        ConfiguracionDanio.h
-        ConfiguracionDanio.cpp
-        configuraciondanio.h
-        configuraciondanio.cpp
-
+        Partida.h Partida.cpp
+        MotorCombate.h MotorCombate.cpp
+        # CORREGIDO: Eliminar duplicados
+        ConfiguracionDanio.h ConfiguracionDanio.cpp
         tipoelemento.h
-
-        carta.h
-        carta.cpp
-
-        jugador.h
-        jugador.cpp
-
-        jugadorhumano.h
-        jugadorhumano.cpp
-
-        jugadoria.h
-        jugadoria.cpp
+        carta.h carta.cpp
+        jugador.h jugador.cpp
+        jugadorhumano.h jugadorhumano.cpp
+        jugadoria.h jugadoria.cpp
         cartawidget.h cartawidget.cpp cartawidget.ui
+        menuprincipal.h menuprincipal.cpp menuprincipal.ui
     )
 else()
-    if(ANDROID)
-        add_library(TPpoo2da SHARED
-            ${PROJECT_SOURCES}
-        )
-    else()
-        add_executable(TPpoo2da
-            ${PROJECT_SOURCES}
-        )
-    endif()
+    # ... (resto igual)
 endif()
 
 target_link_libraries(TPpoo2da PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-    set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.TPpoo2da)
-endif()
 
 set_target_properties(TPpoo2da PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE FALSE
+    WIN32_EXECUTABLE TRUE  # CORREGIDO: TRUE para evitar conflictos de consola en Windows
 )
 
 include(GNUInstallDirs)

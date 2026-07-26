@@ -18,7 +18,9 @@ public:
     void ejecutarRonda();
     bool hayGanador() const;
     Jugador *obtenerGanador() const;
-
+    void seleccionarCartaHumano(Carta* carta);
+    Jugador* obtenerJugadorHumano() const;
+    Jugador* obtenerJugadorIA() const;
     // Utilizado tambien por Partida para reponer mazos; expuesto para
     // poder testear la generacion de cartas de forma aislada.
     std::vector<Carta> generarCartas(int cantidad);

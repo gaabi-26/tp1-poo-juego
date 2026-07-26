@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-
+#include "menuprincipal.h"
 #include "cartawidget.h"
 #include "carta.h"
+#include "Partida.h"
 #include <QDebug>
+#include <QMessageBox>
 
 MainWindow::MainWindow(Partida *partida, QWidget *parent)
     : QMainWindow(parent),
@@ -12,18 +14,13 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
 {
     ui->setupUi(this);
 
-    cartas.emplace_back(TipoElemento::Agua);
-    cartas.emplace_back(TipoElemento::Fuego);
-    cartas.emplace_back(TipoElemento::Tierra);
-    cartas.emplace_back(TipoElemento::Agua);
-    cartas.emplace_back(TipoElemento::Fuego);
-
-    for(Carta &carta : cartas)
+    // Antes: se creaban 5 cartas hardcodeadas que no eran las de la partida.
+    // Ahora: se usan las cartas reales del jugador humano, para que el
+    // daño aplicado por MotorCombate se refleje en pantalla.
+    for (Carta &carta : partida->obtenerJugadorHumano()->getCartas())
     {
         CartaWidget *widget = new CartaWidget(this);
-
         widget->setCarta(&carta);
-
         widgetsCartas.push_back(widget);
 
         connect(widget,
@@ -42,26 +39,53 @@ MainWindow::~MainWindow()
 
 void MainWindow::seleccionarCarta(CartaWidget* widget)
 {
-    if(cartaSeleccionada != nullptr)
+    Carta* carta = widget->getCarta();
+
+    if (!carta->estaViva())
+    {
+        qDebug() << "No se puede seleccionar una carta muerta";
+        return;
+    }
+
+    if (cartaSeleccionada != nullptr)
         cartaSeleccionada->setSeleccionada(false);
 
     cartaSeleccionada = widget;
-
     cartaSeleccionada->setSeleccionada(true);
 
-    Carta* carta = widget->getCarta();
+    // Esto reemplaza al setCartaActiva llamado "desde ningun lado" que tenias antes.
+    partida->seleccionarCartaHumano(carta);
 
-    QString tipo;
+    qDebug() << "Carta seleccionada | Energia:" << carta->getEnergia();
+}
 
-    switch(carta->getTipo())
+void MainWindow::on_btnRonda_clicked()
+{
+    if (cartaSeleccionada == nullptr)
     {
-    case TipoElemento::Agua: tipo = "Agua"; break;
-    case TipoElemento::Fuego: tipo = "Fuego"; break;
-    case TipoElemento::Tierra: tipo = "Tierra"; break;
+        QMessageBox::warning(this, "Falta seleccion", "Elegi una carta antes de jugar la ronda.");
+        return;
     }
 
-    qDebug()
-        << "Carta seleccionada"
-        << "| Tipo:" << tipo
-        << "| Energia:" << carta->getEnergia();
+    partida->ejecutarRonda();
+
+    // Refrescar todas las cartas para que se vea la energia actualizada.
+    for (CartaWidget* w : widgetsCartas)
+    {
+        w->actualizar();
+    }
+
+    if (partida->hayGanador())
+    {
+        Jugador* ganador = partida->obtenerGanador();
+        QString nombre = ganador ? QString::fromStdString(ganador->getNombre()) : "Nadie";
+        QMessageBox::information(this, "Partida finalizada", "Gano: " + nombre);
+    }
+}
+
+void MainWindow::on_btnVolverMenu_clicked()
+{
+    menu = new MenuPrincipal();
+    menu->show();
+    this->close();
 }

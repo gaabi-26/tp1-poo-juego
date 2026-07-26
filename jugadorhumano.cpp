@@ -1,4 +1,5 @@
 #include "jugadorhumano.h"
+#include <stdexcept>
 
 JugadorHumano::JugadorHumano(std::string nombre)
     : Jugador(nombre)
@@ -7,7 +8,12 @@ JugadorHumano::JugadorHumano(std::string nombre)
 
 Carta& JugadorHumano::seleccionarCarta(Carta *cartaOponente)
 {
-    (void)cartaOponente;
+    (void)cartaOponente; // Silencia advertencias del compilador sobre variable no utilizada
+
+    if (CartaActiva == nullptr)
+    {
+        throw std::runtime_error("El jugador humano no selecciono carta todavia");
+    }
 
     return *CartaActiva;
 }

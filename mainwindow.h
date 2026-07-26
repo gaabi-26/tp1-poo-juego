@@ -12,7 +12,7 @@ class MainWindow;
 QT_END_NAMESPACE
 
 class Partida;
-
+class MenuPrincipal;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -25,11 +25,16 @@ private slots:
     // Declaración exacta que muestra la imagen
     void seleccionarCarta(CartaWidget* widget);
 
+    void on_btnRonda_clicked();
+
+    void on_btnVolverMenu_clicked();
+
 private:
     Ui::MainWindow *ui;
     Partida* partida;
     std::vector<Carta> cartas;
     std::vector<CartaWidget*> widgetsCartas;
     CartaWidget* cartaSeleccionada = nullptr;
+    MenuPrincipal *menu = nullptr;
 };
 #endif // MAINWINDOW_H

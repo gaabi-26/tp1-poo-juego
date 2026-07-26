@@ -38,7 +38,7 @@ std::string Jugador::getNombre() const
     return Nombre;
 }
 
-std::vector<Carta> Jugador::getCartas() const
+std::vector<Carta>& Jugador::getCartas()
 {
     return Cartas;
 }

@@ -1,6 +1,7 @@
 #include "Partida.h"
 #include <cstdlib>
 #include <ctime>
+#include "jugadorhumano.h"
 
 using namespace std;
 
@@ -44,12 +45,6 @@ void Partida::iniciarPartida(int cantidadCartas)
 
     m_cartaActivaHumano = nullptr;
     m_cartaActivaIA = nullptr;
-
-
-    while(!hayGanador())
-    {
-        ejecutarRonda();
-    }
 }
 
 
@@ -92,3 +87,18 @@ Jugador* Partida::obtenerGanador() const
 
     return nullptr;
 }
+
+// Asigna la carta seleccionada como activa para el jugador humano.
+// Realiza una conversión segura de tipo (dynamic_cast) para asegurar que
+// el jugador actual es de tipo JugadorHumano antes de actualizar su estado.
+void Partida::seleccionarCartaHumano(Carta* carta)
+{
+    JugadorHumano* humano = dynamic_cast<JugadorHumano*>(m_jugadorHumano);
+    if (humano != nullptr)
+    {
+        humano->setCartaActiva(carta);
+    }
+}
+
+Jugador* Partida::obtenerJugadorHumano() const { return m_jugadorHumano; }
+Jugador* Partida::obtenerJugadorIA() const { return m_jugadorIA; }
