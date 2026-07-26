@@ -25,6 +25,8 @@ public:
 
     void setSeleccionada(bool seleccionada);
 
+    bool estaMuerta() const;
+
 signals:
     // Señal para emitir la carta cuando se haga clic
     void cartaSeleccionada(CartaWidget* widget);

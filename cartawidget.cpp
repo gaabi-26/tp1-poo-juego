@@ -49,6 +49,11 @@ void CartaWidget::actualizar()
         QString::number(carta->getEnergia()));
 }
 
+bool CartaWidget::estaMuerta() const
+{
+    return !carta->estaViva();
+}
+
 void CartaWidget::mousePressEvent(QMouseEvent *event) {
     emit cartaSeleccionada(this);
 

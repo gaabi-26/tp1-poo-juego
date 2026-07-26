@@ -94,15 +94,46 @@ void MainWindow::on_btnRonda_clicked()
 
     partida->ejecutarRonda();
 
-    // Refrescar todas las cartas para que se vea la energia actualizada.
-    for (CartaWidget* w : widgetsCartas)
+    // Actualizar cartas del jugador
+    for (int i = 0; i < widgetsCartas.size(); )
     {
+        CartaWidget *w = widgetsCartas[i];
+
         w->actualizar();
+
+        if (w->estaMuerta())
+        {
+            ui->horizontalLayout_2->removeWidget(w);
+
+            widgetsCartas.erase(widgetsCartas.begin() + i);
+
+            w->deleteLater();
+        }
+        else
+        {
+            i++;
+        }
     }
 
-    for (CartaWidget* w : widgetsCartasIA)
+    // Actualizar cartas de la IA
+    for (int i = 0; i < widgetsCartasIA.size(); )
     {
+        CartaWidget *w = widgetsCartasIA[i];
+
         w->actualizar();
+
+        if (w->estaMuerta())
+        {
+            ui->widgetCartasIA->layout()->removeWidget(w);
+
+            widgetsCartasIA.erase(widgetsCartasIA.begin() + i);
+
+            w->deleteLater();
+        }
+        else
+        {
+            i++;
+        }
     }
 
     if (partida->hayGanador())
