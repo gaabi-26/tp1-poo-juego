@@ -38,12 +38,28 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         jugadoria.h jugadoria.cpp
         cartawidget.h cartawidget.cpp cartawidget.ui
         menuprincipal.h menuprincipal.cpp menuprincipal.ui
+        configuracionjuego.h configuracionjuego.cpp
+        fabricaia.h fabricaia.cpp
+        repositorioconfiguracion.h repositorioconfiguracion.cpp
+        repositoriopartidas.h repositoriopartidas.cpp
     )
 else()
     # ... (resto igual)
 endif()
 
 target_link_libraries(TPpoo2da PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+# config.txt y partidas/ se leen desde el directorio de trabajo (el de build en Qt Creator).
+file(COPY config.txt partidas DESTINATION ${CMAKE_BINARY_DIR})
+
+# Auto-chequeo de archivos, sin Qt: cmake --build . --target test_archivos
+add_executable(test_archivos EXCLUDE_FROM_ALL
+    test_archivos.cpp
+    configuracionjuego.cpp repositorioconfiguracion.cpp repositoriopartidas.cpp fabricaia.cpp
+    Partida.cpp MotorCombate.cpp ConfiguracionDanio.cpp carta.cpp
+    jugador.cpp jugadorhumano.cpp jugadoria.cpp
+    claseiabasica.cpp claseiaintermedia.cpp claseiaavanzada.cpp
+)
 
 set_target_properties(TPpoo2da PROPERTIES
     ${BUNDLE_ID_OPTION}

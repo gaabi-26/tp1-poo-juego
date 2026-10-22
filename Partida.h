@@ -21,6 +21,14 @@ public:
     void seleccionarCartaHumano(Carta* carta);
     Jugador* obtenerJugadorHumano() const;
     Jugador* obtenerJugadorIA() const;
+
+    // Estado para la persistencia (ver RepositorioPartidas).
+    int obtenerTurno() const;
+    const MotorCombate &obtenerMotor() const;
+    Carta *obtenerCartaActivaHumano() const;
+    int indiceCartaActivaHumano() const;
+    int indiceCartaActivaIA() const;
+    void restaurar(int turno, int indiceHumano, int indiceIA);
     // Utilizado tambien por Partida para reponer mazos; expuesto para
     // poder testear la generacion de cartas de forma aislada.
     std::vector<Carta> generarCartas(int cantidad);
@@ -38,6 +46,8 @@ private:
     // partida descripto en el enunciado.
     Carta *m_cartaActivaHumano;
     Carta *m_cartaActivaIA;
+
+    int m_turno = 0;
 };
 
 #endif // PARTIDA_H

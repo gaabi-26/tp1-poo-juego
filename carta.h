@@ -10,7 +10,7 @@ private:
     TipoElemento Tipo;
 
 public:
-    Carta(TipoElemento tipo);
+    Carta(TipoElemento tipo, int energia = 100);
 
     void recibirDanio(int danio);
 

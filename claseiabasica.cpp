@@ -16,3 +16,8 @@ vector<Carta> cartasDisponibles, Carta cartaOponente) {
 
 
 }
+
+string claseIAbasica::nombre() const
+{
+    return "Aleatoria";
+}

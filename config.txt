@@ -1,0 +1,15 @@
+# Configuracion del juego. Las lineas invalidas se ignoran.
+cantidadCartas=5
+# Aleatoria | Estrategica | Super
+ia=Estrategica
+
+# danio.<Atacante>.<Defensor>=porcentaje (0 a 100)
+danio.Agua.Agua=10
+danio.Agua.Fuego=40
+danio.Agua.Tierra=20
+danio.Fuego.Agua=20
+danio.Fuego.Fuego=10
+danio.Fuego.Tierra=40
+danio.Tierra.Agua=40
+danio.Tierra.Fuego=20
+danio.Tierra.Tierra=10

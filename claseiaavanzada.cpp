@@ -60,3 +60,8 @@ if(danioActual>mayorDanio){
 }
 return cartasDisponibles[posicionMejorCarta];
 }
+
+string ClaseIAAvanzada::nombre() const
+{
+    return "Super";
+}

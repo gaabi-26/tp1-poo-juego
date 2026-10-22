@@ -30,3 +30,8 @@ int MotorCombate::calcularDanio(const Carta &atacante, const Carta &defensor) co
 {
     return m_configuracion.obtenerDanio(static_cast<int>(atacante.getTipo()),static_cast<int>(defensor.getTipo()));
 }
+
+const ConfiguracionDanio &MotorCombate::obtenerConfiguracion() const
+{
+    return m_configuracion;
+}

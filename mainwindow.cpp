@@ -4,6 +4,8 @@
 #include "cartawidget.h"
 #include "carta.h"
 #include "Partida.h"
+#include "repositoriopartidas.h"
+#include <QInputDialog>
 #include <QDebug>
 #include <QMessageBox>
 #include <QHBoxLayout>
@@ -33,6 +35,12 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
     // daño aplicado por MotorCombate se refleje en pantalla.
     for (Carta &carta : partida->obtenerJugadorHumano()->getCartas())
     {
+        // En una partida cargada puede haber cartas ya eliminadas.
+        if (!carta.estaViva())
+        {
+            continue;
+        }
+
         CartaWidget *widget = new CartaWidget(this);
         widget->setCarta(&carta);
         widgetsCartas.push_back(widget);
@@ -47,6 +55,11 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
 
     for (Carta &carta : partida->obtenerJugadorIA()->getCartas())
     {
+        if (!carta.estaViva())
+        {
+            continue;
+        }
+
         CartaWidget *widget = new CartaWidget(this);
 
         widget->setCarta(&carta);
@@ -54,6 +67,15 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
         widgetsCartasIA.push_back(widget);
 
        layoutCartasIA->addWidget(widget);
+    }
+
+    // Partida cargada: la carta activa del humano ya viene elegida.
+    for (CartaWidget *widget : widgetsCartas)
+    {
+        if (widget->getCarta() == partida->obtenerCartaActivaHumano())
+        {
+            seleccionarCarta(widget);
+        }
     }
 }
 
@@ -103,6 +125,11 @@ void MainWindow::on_btnRonda_clicked()
 
         if (w->estaMuerta())
         {
+            if (w == cartaSeleccionada)
+            {
+                cartaSeleccionada = nullptr;
+            }
+
             ui->horizontalLayout_2->removeWidget(w);
 
             widgetsCartas.erase(widgetsCartas.begin() + i);
@@ -141,6 +168,8 @@ void MainWindow::on_btnRonda_clicked()
         Jugador* ganador = partida->obtenerGanador();
         QString nombre = ganador ? QString::fromStdString(ganador->getNombre()) : "Nadie";
         QMessageBox::information(this, "Partida finalizada", "Gano: " + nombre);
+
+        ui->btnRonda->setEnabled(false);
     }
 }
 
@@ -149,4 +178,25 @@ void MainWindow::on_btnVolverMenu_clicked()
     menu = new MenuPrincipal();
     menu->show();
     this->close();
+}
+
+void MainWindow::on_btnGuardar_clicked()
+{
+    bool aceptado = false;
+    QString nombre = QInputDialog::getText(this, "Guardar partida", "Nombre:",
+                                           QLineEdit::Normal, "partida", &aceptado);
+
+    if (!aceptado)
+    {
+        return;
+    }
+
+    if (RepositorioPartidas().guardar(*partida, nombre.toStdString()))
+    {
+        QMessageBox::information(this, "Guardar partida", "Partida guardada.");
+    }
+    else
+    {
+        QMessageBox::critical(this, "Guardar partida", "No se pudo guardar la partida (nombre invalido o error de escritura).");
+    }
 }

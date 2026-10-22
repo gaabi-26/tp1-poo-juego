@@ -12,6 +12,7 @@ public:
     ClaseIAAvanzada(ConfiguracionDanio& configuracion);
 
     virtual Carta elegirCarta(vector<Carta> cartasDisponibles, Carta cartaOponente) override;
+    string nombre() const override;
 };
 
 #endif // CLASEIAAVANZADA_H

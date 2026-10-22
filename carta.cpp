@@ -1,8 +1,8 @@
 #include "carta.h"
 
-Carta::Carta(TipoElemento tipo)
+Carta::Carta(TipoElemento tipo, int energia)
 {
-    Energia = 100;
+    Energia = energia;
     Tipo = tipo;
 }
 

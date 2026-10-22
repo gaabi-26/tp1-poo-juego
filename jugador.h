@@ -32,6 +32,9 @@ public:
 
     std::vector<Carta>& getCartas();
 
+    // -1 si la carta no es de este jugador (o es nullptr).
+    int indiceCarta(const Carta *carta) const;
+
     void setCartas(const std::vector<Carta>& cartas);
 };
 

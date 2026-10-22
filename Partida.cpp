@@ -45,6 +45,7 @@ void Partida::iniciarPartida(int cantidadCartas)
 
     m_cartaActivaHumano = nullptr;
     m_cartaActivaIA = nullptr;
+    m_turno = 0;
 }
 
 
@@ -63,6 +64,7 @@ void Partida::ejecutarRonda()
 
 
     m_motor.ejecutarTurno(*m_cartaActivaHumano, *m_cartaActivaIA);
+    m_turno++;
 }
 
 
@@ -117,3 +119,26 @@ void Partida::seleccionarCartaHumano(Carta* carta)
 
 Jugador* Partida::obtenerJugadorHumano() const { return m_jugadorHumano; }
 Jugador* Partida::obtenerJugadorIA() const { return m_jugadorIA; }
+
+int Partida::obtenerTurno() const { return m_turno; }
+const MotorCombate &Partida::obtenerMotor() const { return m_motor; }
+Carta *Partida::obtenerCartaActivaHumano() const { return m_cartaActivaHumano; }
+
+int Partida::indiceCartaActivaHumano() const { return m_jugadorHumano->indiceCarta(m_cartaActivaHumano); }
+int Partida::indiceCartaActivaIA() const { return m_jugadorIA->indiceCarta(m_cartaActivaIA); }
+
+void Partida::restaurar(int turno, int indiceHumano, int indiceIA)
+{
+    m_turno = turno;
+
+    if (indiceHumano >= 0 && indiceHumano < static_cast<int>(m_jugadorHumano->getCartas().size()))
+    {
+        seleccionarCartaHumano(&m_jugadorHumano->getCartas()[indiceHumano]);
+    }
+
+    if (indiceIA >= 0 && indiceIA < static_cast<int>(m_jugadorIA->getCartas().size()) &&
+        m_jugadorIA->getCartas()[indiceIA].estaViva())
+    {
+        m_cartaActivaIA = &m_jugadorIA->getCartas()[indiceIA];
+    }
+}

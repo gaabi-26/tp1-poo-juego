@@ -29,6 +29,8 @@ private slots:
 
     void on_btnVolverMenu_clicked();
 
+    void on_btnGuardar_clicked();
+
 private:
     Ui::MainWindow *ui;
     Partida* partida;

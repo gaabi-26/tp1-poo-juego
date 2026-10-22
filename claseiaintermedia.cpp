@@ -27,3 +27,8 @@ Carta ClaseIAIntermedia::elegirCarta(vector<Carta> cartasDisponibles, Carta cart
     }
     return cartasDisponibles[posicionMejorCarta];
 }
+
+string ClaseIAIntermedia::nombre() const
+{
+    return "Estrategica";
+}

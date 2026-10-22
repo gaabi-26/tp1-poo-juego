@@ -17,6 +17,8 @@ public:
 
     int calcularDanio(const Carta &atacante, const Carta &defensor) const;
 
+    const ConfiguracionDanio &obtenerConfiguracion() const;
+
 private:
     ConfiguracionDanio m_configuracion;
 };
