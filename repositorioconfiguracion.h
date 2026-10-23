@@ -7,6 +7,12 @@
 #include "configuracionjuego.h"
 #include "tipoelemento.h"
 
+// CMake define DIRECTORIO_DATOS con la carpeta del proyecto, para que config.txt y
+// partidas/ no queden en la carpeta de build.
+#ifndef DIRECTORIO_DATOS
+#define DIRECTORIO_DATOS "."
+#endif
+
 // Lee y escribe el formato de texto "clave=valor" (una por linea, '#' comenta)
 // que usan config.txt y las partidas guardadas. Es el unico lugar que parsea.
 class RepositorioConfiguracion

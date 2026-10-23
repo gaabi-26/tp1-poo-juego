@@ -77,6 +77,43 @@ int main()
     }
 
     std::filesystem::remove_all("test_partidas");
+
+    // La IA vuelve a elegir carta en cada ronda (sin danio no muere ninguna).
+    ConfiguracionDanio *sinDanio = new ConfiguracionDanio();
+
+    for (int atacante = 0; atacante < ConfiguracionDanio::CANTIDAD_TIPOS; atacante++)
+    {
+        for (int defensor = 0; defensor < ConfiguracionDanio::CANTIDAD_TIPOS; defensor++)
+        {
+            sinDanio->configurarDanio(atacante, defensor, 0);
+        }
+    }
+
+    JugadorHumano *humano2 = new JugadorHumano("Ana");
+    JugadorIA *ia2 = new JugadorIA("PC", FabricaIA::crear("Aleatoria", *sinDanio));
+    Partida sinMuertes(humano2, ia2, MotorCombate(*sinDanio));
+    sinMuertes.iniciarPartida(5);
+    sinMuertes.seleccionarCartaHumano(&humano2->getCartas()[0]);
+
+    int primera = -1;
+    bool cambio = false;
+
+    for (int ronda = 0; ronda < 30; ronda++)
+    {
+        sinMuertes.ejecutarRonda();
+
+        if (primera == -1)
+        {
+            primera = sinMuertes.indiceCartaActivaIA();
+        }
+        else if (sinMuertes.indiceCartaActivaIA() != primera)
+        {
+            cambio = true;
+        }
+    }
+
+    assert(cambio);
+
     std::cout << "test_archivos OK\n";
     return 0;
 }

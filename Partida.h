@@ -40,10 +40,9 @@ private:
 
     std::vector<TipoElemento> m_tiposDisponibles;
 
-    // Carta actualmente en combate de cada jugador. Se mantiene hasta que
-    // muere; en ese momento el jugador debe elegir una nueva (ver
-    // ejecutarRonda()). Este comportamiento reproduce el ejemplo de
-    // partida descripto en el enunciado.
+    // Carta actualmente en combate de cada jugador. La del humano se mantiene
+    // hasta que muere; en ese momento debe elegir una nueva (ver
+    // ejecutarRonda()). La IA vuelve a elegir en cada ronda.
     Carta *m_cartaActivaHumano;
     Carta *m_cartaActivaIA;
 

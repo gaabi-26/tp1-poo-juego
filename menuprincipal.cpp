@@ -25,7 +25,7 @@ MenuPrincipal::MenuPrincipal(QWidget *parent)
     ui->setupUi(this);
 
     // Valores iniciales desde config.txt (si no existe, quedan los por defecto).
-    ConfiguracionJuego config = RepositorioConfiguracion().cargar("config.txt");
+    ConfiguracionJuego config = RepositorioConfiguracion().cargar(std::string(DIRECTORIO_DATOS) + "/config.txt");
 
     cantidadCartas = config.obtenerCantidadCartas();
 

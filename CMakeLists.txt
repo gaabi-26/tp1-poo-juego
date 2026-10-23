@@ -49,8 +49,8 @@ endif()
 
 target_link_libraries(TPpoo2da PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-# config.txt y partidas/ se leen desde el directorio de trabajo (el de build en Qt Creator).
-file(COPY config.txt partidas DESTINATION ${CMAKE_BINARY_DIR})
+# config.txt y partidas/ se leen y guardan en la carpeta del proyecto (no en la de build).
+target_compile_definitions(TPpoo2da PRIVATE DIRECTORIO_DATOS="${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Auto-chequeo de archivos, sin Qt: cmake --build . --target test_archivos
 add_executable(test_archivos EXCLUDE_FROM_ALL

@@ -4,13 +4,14 @@
 #include <string>
 #include <vector>
 #include "Partida.h"
+#include "repositorioconfiguracion.h"
 
 // Guarda, lista y recupera partidas como archivos de texto "<carpeta>/<nombre>.txt".
 // Usa el mismo formato que config.txt (ver RepositorioConfiguracion) mas el estado.
 class RepositorioPartidas
 {
 public:
-    explicit RepositorioPartidas(const std::string &carpeta = "partidas");
+    explicit RepositorioPartidas(const std::string &carpeta = std::string(DIRECTORIO_DATOS) + "/partidas");
 
     // false si el nombre no es valido o no se pudo escribir el archivo.
     bool guardar(Partida &partida, const std::string &nombre) const;

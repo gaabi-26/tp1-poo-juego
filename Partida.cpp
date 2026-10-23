@@ -57,10 +57,8 @@ void Partida::ejecutarRonda()
     }
 
 
-    if(m_cartaActivaIA == nullptr || !m_cartaActivaIA->estaViva())
-    {
-        m_cartaActivaIA = &m_jugadorIA->seleccionarCarta(m_cartaActivaHumano);
-    }
+    // La IA elige de nuevo en cada ronda, no mantiene la carta hasta que muere.
+    m_cartaActivaIA = &m_jugadorIA->seleccionarCarta(m_cartaActivaHumano);
 
 
     m_motor.ejecutarTurno(*m_cartaActivaHumano, *m_cartaActivaIA);
