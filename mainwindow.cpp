@@ -4,7 +4,7 @@
 #include "cartawidget.h"
 #include "carta.h"
 #include "Partida.h"
-#include "repositoriopartidas.h"
+#include "partidadaofiletxt.h"
 #include <QInputDialog>
 #include <QDebug>
 #include <QMessageBox>
@@ -16,6 +16,8 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
     partida(partida)
 {
     ui->setupUi(this);
+
+    this->partidaDao = new PartidaDaoFileTxt();
 
     ///esto se agrega por un incoveniente con qtdesigner
     // Creamos un layout horizontal dentro del widget reservado
@@ -81,6 +83,7 @@ MainWindow::MainWindow(Partida *partida, QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    delete partidaDao;
     delete ui;
 }
 
@@ -191,12 +194,12 @@ void MainWindow::on_btnGuardar_clicked()
         return;
     }
 
-    if (RepositorioPartidas().guardar(*partida, nombre.toStdString()))
+    if (this->partidaDao->guardar(*partida, nombre.toStdString()))
     {
         QMessageBox::information(this, "Guardar partida", "Partida guardada.");
     }
     else
     {
-        QMessageBox::critical(this, "Guardar partida", "No se pudo guardar la partida (nombre invalido o error de escritura).");
+        QMessageBox::critical(this, "Guardar partida", "No se pudo guardar la partida. El nombre solo puede tener letras, numeros, espacios, _ y -.");
     }
 }

@@ -14,49 +14,43 @@ int energiaOponente = cartaOponente.getEnergia();
 
 int indiceDefensor=static_cast<int>(cartaOponente.getTipo());
 
-int posicionCartaEliminadora=-1;
-int menorEnergiaPropia=101;
+///La IA ya conoce la carta que va a jugar el humano: simula el choque de esta ronda con cada una de sus cartas
 
-///PRIMERA PARTE: busca una carta que pueda eliminar al oponente
+int posicionMejorCarta=0;
+int mejorPuntaje=-1000; ///se inicia muy bajo porque el puntaje puede ser negativo
+int energiaMejorCarta=0;
 
 for(int i=0;i<static_cast<int>(cartasDisponibles.size());i++){
 
     int indiceAtacante= static_cast<int>(cartasDisponibles[i].getTipo());
+    int energiaPropia = cartasDisponibles[i].getEnergia();
 
-    int danioActual=configuracion.obtenerDanio(indiceAtacante,indiceDefensor);
-    if(danioActual>=energiaOponente){
-        int energiaPropia = cartasDisponibles[i].getEnergia();
+    int danioHecho=configuracion.obtenerDanio(indiceAtacante,indiceDefensor);
+    int danioRecibido=configuracion.obtenerDanio(indiceDefensor,indiceAtacante);
 
-     if(energiaPropia<menorEnergiaPropia){
-         menorEnergiaPropia = energiaPropia;
-         posicionCartaEliminadora= i;
-        }
+    bool eliminaAlOponente = danioHecho>=energiaOponente;
+    bool muerePropia = danioRecibido>=energiaPropia;
+
+    ///ventaja de danio sobre el rival, con premio por eliminarlo y castigo por perder la carta
+    int puntaje=danioHecho-danioRecibido;
+    if(eliminaAlOponente){
+        puntaje+=200;
     }
-}
+    if(muerePropia){
+        puntaje-=150;
+    }
 
+    ///a igual puntaje decide la vida propia: si elimina gasta la carta mas debil, si no usa la mas sana
+    bool desempata = energiaPropia>energiaMejorCarta;
+    if(eliminaAlOponente){
+        desempata = energiaPropia<energiaMejorCarta;
+    }
 
-///si encontro una carta capaz de eliminar al oponente devuelve esa carta.
-if(posicionCartaEliminadora!=-1){
-return cartasDisponibles[posicionCartaEliminadora];
-}
-
-
-
-///SEGUNDA PARTE: si ninguna carta puede eliminar al rival, elegir la que cause mayor danio
-
-int posicionMejorCarta=0;
-int mayorDanio=-1;
-
-for(int i=0;i<static_cast<int>(cartasDisponibles.size());i++){
-int indiceAtacante= static_cast<int>(cartasDisponibles[i].getTipo());
-
-int danioActual=configuracion.obtenerDanio(indiceAtacante,indiceDefensor);
-
-if(danioActual>mayorDanio){
-    mayorDanio = danioActual;
-    posicionMejorCarta = i;
-}
-
+    if(puntaje>mejorPuntaje || (puntaje==mejorPuntaje && desempata)){
+        mejorPuntaje = puntaje;
+        energiaMejorCarta = energiaPropia;
+        posicionMejorCarta = i;
+    }
 }
 return cartasDisponibles[posicionMejorCarta];
 }

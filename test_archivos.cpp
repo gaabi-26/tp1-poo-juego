@@ -1,31 +1,36 @@
-// Auto-chequeo de la persistencia. Sin Qt: target "test_archivos" (no se compila con "all").
+// Auto-chequeo de la persistencia y de las IA. Se compila con cmake -DBUILD_TESTS=ON (target "test_archivos").
 #include <cassert>
-#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <QDir>
+#include "claseiaavanzada.h"
+#include "claseiaintermedia.h"
+#include "configuraciondaofiletxt.h"
 #include "fabricaia.h"
 #include "jugadorhumano.h"
 #include "jugadoria.h"
-#include "repositoriopartidas.h"
-#include "repositorioconfiguracion.h"
+#include "partidadaofiletxt.h"
+
+using namespace std;
 
 int main()
 {
     // Archivo inexistente -> valores por defecto.
-    ConfiguracionJuego porDefecto = RepositorioConfiguracion().cargar("no_existe.txt");
-    assert(porDefecto.obtenerCantidadCartas() == 5 && porDefecto.obtenerIA() == "Aleatoria");
+    ConfiguracionDaoFileTxt configuracionDao("no_existe.txt");
+    ConfiguracionJuego porDefecto = configuracionDao.leer();
+    assert(porDefecto.getCantidadCartas() == 5 && porDefecto.getIA() == "Aleatoria");
 
-    // Lineas invalidas se ignoran, las validas se aplican.
-    std::istringstream texto("# c\ncantidadCartas=abc\nia=Super\nbasura\ndanio.Agua.Fuego=77\ndanio.Agua.Tierra=x\nia2=Super\n");
-    ConfiguracionJuego leida = RepositorioConfiguracion::desdeClaves(RepositorioConfiguracion::leerClaves(texto));
-    assert(leida.obtenerCantidadCartas() == 5 && leida.obtenerIA() == "Super");
-    assert(leida.obtenerDanio().obtenerDanio(0, 1) == 77);
-    assert(leida.obtenerDanio().obtenerDanio(0, 2) == porDefecto.obtenerDanio().obtenerDanio(0, 2));
+    // Las lineas invalidas se ignoran y las validas se aplican.
+    istringstream texto("# c\ncantidadCartas=abc\nia=Super\nbasura\ndanio.Agua.Fuego=77\ndanio.Agua.Tierra=x\nia2=Super\n");
+    ConfiguracionJuego leida = configuracionDao.desdeClaves(configuracionDao.leerClaves(texto));
+    assert(leida.getCantidadCartas() == 5 && leida.getIA() == "Super");
+    assert(leida.getDanio().obtenerDanio(0, 1) == 77);
+    assert(leida.getDanio().obtenerDanio(0, 2) == porDefecto.getDanio().obtenerDanio(0, 2));
 
     // Ida y vuelta: guardar -> listar -> cargar.
-    std::filesystem::remove_all("test_partidas");
-    RepositorioPartidas repo("test_partidas");
+    QDir("test_partidas").removeRecursively();
+    PartidaDao *dao = new PartidaDaoFileTxt("test_partidas");
 
     ConfiguracionDanio *danio = new ConfiguracionDanio();
     danio->configurarDanio(0, 1, 55);
@@ -36,39 +41,44 @@ int main()
     original.seleccionarCartaHumano(&humano->getCartas()[2]);
     original.ejecutarRonda();
 
-    assert(repo.guardar(original, "uno"));
-    assert(!repo.guardar(original, "../malo"));
-    assert(repo.listar().size() == 1 && repo.listar()[0] == "uno");
+    assert(dao->guardar(original, "uno"));
+    assert(!dao->guardar(original, "../malo"));
+    assert(dao->listar().size() == 1 && dao->listar()[0] == "uno");
 
-    Partida *copia = repo.cargar("uno");
+    Partida *copia = dao->cargar("uno");
     assert(copia->obtenerTurno() == original.obtenerTurno());
     assert(copia->indiceCartaActivaHumano() == 2);
     assert(copia->indiceCartaActivaIA() == original.indiceCartaActivaIA());
     assert(copia->obtenerMotor().obtenerConfiguracion().obtenerDanio(0, 1) == 55);
     assert(dynamic_cast<JugadorIA *>(copia->obtenerJugadorIA())->getEstrategia()->nombre() == "Super");
     assert(copia->obtenerJugadorHumano()->getNombre() == "Ana");
-    for (int jugador = 0; jugador < 2; jugador++)
+
+    for (int i = 0; i < original.obtenerJugadorHumano()->getCartas().size(); i++)
     {
-        std::vector<Carta> &a = (jugador ? original.obtenerJugadorIA() : original.obtenerJugadorHumano())->getCartas();
-        std::vector<Carta> &b = (jugador ? copia->obtenerJugadorIA() : copia->obtenerJugadorHumano())->getCartas();
-        assert(a.size() == b.size());
-        for (size_t i = 0; i < a.size(); i++)
-        {
-            assert(a[i].getTipo() == b[i].getTipo() && a[i].getEnergia() == b[i].getEnergia());
-        }
+        Carta a = original.obtenerJugadorHumano()->getCartas()[i];
+        Carta b = copia->obtenerJugadorHumano()->getCartas()[i];
+        assert(a.getTipo() == b.getTipo() && a.getEnergia() == b.getEnergia());
+
+        a = original.obtenerJugadorIA()->getCartas()[i];
+        b = copia->obtenerJugadorIA()->getCartas()[i];
+        assert(a.getTipo() == b.getTipo() && a.getEnergia() == b.getEnergia());
     }
 
-    // Archivo corrupto / inexistente -> excepcion.
-    std::ofstream("test_partidas/roto.txt") << "turno=1\ncartasHumano=Agua:100\n";
-    for (const char *nombre : {"roto", "fantasma"})
+    // Archivo corrupto o inexistente -> excepcion.
+    ofstream roto("test_partidas/roto.txt");
+    roto << "turno=1\ncartasHumano=Agua:100\n";
+    roto.close();
+
+    string nombres[2] = {"roto", "fantasma"};
+    for (int i = 0; i < 2; i++)
     {
         bool lanzo = false;
 
         try
         {
-            repo.cargar(nombre);
+            dao->cargar(nombres[i]);
         }
-        catch (const std::runtime_error &)
+        catch (const runtime_error &e)
         {
             lanzo = true;
         }
@@ -76,7 +86,49 @@ int main()
         assert(lanzo);
     }
 
-    std::filesystem::remove_all("test_partidas");
+    delete dao;
+    QDir("test_partidas").removeRecursively();
+
+    // Las estrategias deciden segun la vida de sus cartas (tabla de danio por defecto).
+    ConfiguracionDanio tabla;
+    ClaseIAIntermedia estrategica(tabla);
+    ClaseIAAvanzada experta(tabla);
+    vector<Carta> mano;
+
+    // Estrategica: ante el mismo danio usa la carta con mas vida.
+    mano.push_back(Carta(TipoElemento::Agua, 40));
+    mano.push_back(Carta(TipoElemento::Agua, 100));
+    mano.push_back(Carta(TipoElemento::Tierra, 100));
+    Carta elegida = estrategica.elegirCarta(mano, Carta(TipoElemento::Fuego));
+    assert(elegida.getTipo() == TipoElemento::Agua && elegida.getEnergia() == 100);
+
+    // Experta: elimina a la carta del humano sin morir.
+    mano.clear();
+    mano.push_back(Carta(TipoElemento::Tierra, 100));
+    mano.push_back(Carta(TipoElemento::Agua, 100));
+    elegida = experta.elegirCarta(mano, Carta(TipoElemento::Fuego, 30));
+    assert(elegida.getTipo() == TipoElemento::Agua);
+
+    // Experta: no manda al frente la carta que moriria.
+    mano.clear();
+    mano.push_back(Carta(TipoElemento::Agua, 10));
+    mano.push_back(Carta(TipoElemento::Fuego, 100));
+    elegida = experta.elegirCarta(mano, Carta(TipoElemento::Tierra));
+    assert(elegida.getTipo() == TipoElemento::Fuego);
+
+    // Experta: sin poder eliminar usa la mas sana.
+    mano.clear();
+    mano.push_back(Carta(TipoElemento::Agua, 40));
+    mano.push_back(Carta(TipoElemento::Agua, 100));
+    elegida = experta.elegirCarta(mano, Carta(TipoElemento::Fuego));
+    assert(elegida.getEnergia() == 100);
+
+    // Experta: si elimina gasta la mas debil.
+    mano.clear();
+    mano.push_back(Carta(TipoElemento::Agua, 100));
+    mano.push_back(Carta(TipoElemento::Agua, 60));
+    elegida = experta.elegirCarta(mano, Carta(TipoElemento::Fuego, 30));
+    assert(elegida.getEnergia() == 60);
 
     // La IA vuelve a elegir carta en cada ronda (sin danio no muere ninguna).
     ConfiguracionDanio *sinDanio = new ConfiguracionDanio();
@@ -114,6 +166,6 @@ int main()
 
     assert(cambio);
 
-    std::cout << "test_archivos OK\n";
+    cout << "test_archivos OK" << endl;
     return 0;
 }

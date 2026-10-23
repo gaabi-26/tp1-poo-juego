@@ -50,11 +50,11 @@ void Jugador::setCartas(const std::vector<Carta>& cartas)
 
 int Jugador::indiceCarta(const Carta *carta) const
 {
-    for (size_t i = 0; i < Cartas.size(); i++)
+    for (int i = 0; i < Cartas.size(); i++)
     {
         if (&Cartas[i] == carta)
         {
-            return static_cast<int>(i);
+            return i;
         }
     }
 

@@ -10,8 +10,8 @@
 #include "jugadoria.h"
 
 #include "fabricaia.h"
-#include "repositorioconfiguracion.h"
-#include "repositoriopartidas.h"
+#include "configuraciondaofiletxt.h"
+#include "partidadaofiletxt.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -24,36 +24,41 @@ MenuPrincipal::MenuPrincipal(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->partidaDao = new PartidaDaoFileTxt();
+
     // Valores iniciales desde config.txt (si no existe, quedan los por defecto).
-    ConfiguracionJuego config = RepositorioConfiguracion().cargar(std::string(DIRECTORIO_DATOS) + "/config.txt");
+    ConfiguracionDao *configuracionDao = new ConfiguracionDaoFileTxt();
+    ConfiguracionJuego config = configuracionDao->leer();
+    delete configuracionDao;
 
-    cantidadCartas = config.obtenerCantidadCartas();
+    cantidadCartas = config.getCantidadCartas();
 
-    const std::vector<std::string> &nombresIA = FabricaIA::nombres();
+    std::vector<std::string> nombresIA = FabricaIA::nombres();
 
-    for (size_t i = 0; i < nombresIA.size(); i++)
+    for (int i = 0; i < nombresIA.size(); i++)
     {
-        if (nombresIA[i] == config.obtenerIA())
+        if (nombresIA[i] == config.getIA())
         {
-            ui->cmbIA->setCurrentIndex(static_cast<int>(i));
+            ui->cmbIA->setCurrentIndex(i);
         }
     }
 
-    ui->spAguaAgua->setValue(config.obtenerDanio().obtenerDanio(0,0));
-    ui->spAguaFuego->setValue(config.obtenerDanio().obtenerDanio(0,1));
-    ui->spAguaTierra->setValue(config.obtenerDanio().obtenerDanio(0,2));
+    ui->spAguaAgua->setValue(config.getDanio().obtenerDanio(0,0));
+    ui->spAguaFuego->setValue(config.getDanio().obtenerDanio(0,1));
+    ui->spAguaTierra->setValue(config.getDanio().obtenerDanio(0,2));
 
-    ui->spFuegoAgua->setValue(config.obtenerDanio().obtenerDanio(1,0));
-    ui->spFuegoFuego->setValue(config.obtenerDanio().obtenerDanio(1,1));
-    ui->spFuegoTierra->setValue(config.obtenerDanio().obtenerDanio(1,2));
+    ui->spFuegoAgua->setValue(config.getDanio().obtenerDanio(1,0));
+    ui->spFuegoFuego->setValue(config.getDanio().obtenerDanio(1,1));
+    ui->spFuegoTierra->setValue(config.getDanio().obtenerDanio(1,2));
 
-    ui->spTierraAgua->setValue(config.obtenerDanio().obtenerDanio(2,0));
-    ui->spTierraFuego->setValue(config.obtenerDanio().obtenerDanio(2,1));
-    ui->spTierraTierra->setValue(config.obtenerDanio().obtenerDanio(2,2));
+    ui->spTierraAgua->setValue(config.getDanio().obtenerDanio(2,0));
+    ui->spTierraFuego->setValue(config.getDanio().obtenerDanio(2,1));
+    ui->spTierraTierra->setValue(config.getDanio().obtenerDanio(2,2));
 }
 
 MenuPrincipal::~MenuPrincipal()
 {
+    delete partidaDao;
     delete ui;
 }
 
@@ -120,12 +125,12 @@ void MenuPrincipal::on_btnIniciar_clicked()
 
 void MenuPrincipal::on_btnCargar_clicked()
 {
-    RepositorioPartidas repositorio;
+    std::vector<std::string> partidas = this->partidaDao->listar();
 
     QStringList nombres;
-    for (const std::string &nombre : repositorio.listar())
+    for (int i = 0; i < partidas.size(); i++)
     {
-        nombres << QString::fromStdString(nombre);
+        nombres << QString::fromStdString(partidas[i]);
     }
 
     if (nombres.isEmpty())
@@ -144,7 +149,7 @@ void MenuPrincipal::on_btnCargar_clicked()
 
     try
     {
-        abrirJuego(repositorio.cargar(elegida.toStdString()));
+        abrirJuego(this->partidaDao->cargar(elegida.toStdString()));
     }
     catch (const std::exception &e)
     {

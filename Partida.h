@@ -22,7 +22,7 @@ public:
     Jugador* obtenerJugadorHumano() const;
     Jugador* obtenerJugadorIA() const;
 
-    // Estado para la persistencia (ver RepositorioPartidas).
+    // Estado para la persistencia (ver PartidaDaoFileTxt).
     int obtenerTurno() const;
     const MotorCombate &obtenerMotor() const;
     Carta *obtenerCartaActivaHumano() const;

@@ -5,6 +5,7 @@
 
 class MainWindow;
 class Partida;
+class PartidaDao;
 
 namespace Ui {
 class MenuPrincipal;
@@ -31,6 +32,8 @@ private:
     int cantidadCartas = 5;
 
     MainWindow *ventanaJuego = nullptr;
+
+    PartidaDao *partidaDao = nullptr;
 };
 
 #endif

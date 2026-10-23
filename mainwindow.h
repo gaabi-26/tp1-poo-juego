@@ -13,6 +13,7 @@ QT_END_NAMESPACE
 
 class Partida;
 class MenuPrincipal;
+class PartidaDao;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -39,5 +40,6 @@ private:
     std::vector<CartaWidget*> widgetsCartasIA;
     CartaWidget* cartaSeleccionada = nullptr;
     MenuPrincipal *menu = nullptr;
+    PartidaDao *partidaDao = nullptr;
 };
 #endif // MAINWINDOW_H

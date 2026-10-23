@@ -40,8 +40,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         menuprincipal.h menuprincipal.cpp menuprincipal.ui
         configuracionjuego.h configuracionjuego.cpp
         fabricaia.h fabricaia.cpp
-        repositorioconfiguracion.h repositorioconfiguracion.cpp
-        repositoriopartidas.h repositoriopartidas.cpp
+        configuraciondao.h
+        configuraciondaofiletxt.h configuraciondaofiletxt.cpp
+        partidadao.h
+        partidadaofiletxt.h partidadaofiletxt.cpp
     )
 else()
     # ... (resto igual)
@@ -52,14 +54,20 @@ target_link_libraries(TPpoo2da PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 # config.txt y partidas/ se leen y guardan en la carpeta del proyecto (no en la de build).
 target_compile_definitions(TPpoo2da PRIVATE DIRECTORIO_DATOS="${CMAKE_CURRENT_SOURCE_DIR}")
 
-# Auto-chequeo de archivos, sin Qt: cmake --build . --target test_archivos
-add_executable(test_archivos EXCLUDE_FROM_ALL
-    test_archivos.cpp
-    configuracionjuego.cpp repositorioconfiguracion.cpp repositoriopartidas.cpp fabricaia.cpp
-    Partida.cpp MotorCombate.cpp ConfiguracionDanio.cpp carta.cpp
-    jugador.cpp jugadorhumano.cpp jugadoria.cpp
-    claseiabasica.cpp claseiaintermedia.cpp claseiaavanzada.cpp
-)
+# Auto-chequeo de archivos (usa Qt Core solo para las carpetas). Apagado por defecto para que Qt Creator muestre solo
+# TPpoo2da; para usarlo: cmake -DBUILD_TESTS=ON ... y compilar el target test_archivos.
+option(BUILD_TESTS "Compilar test_archivos" OFF)
+
+if(BUILD_TESTS)
+    add_executable(test_archivos
+        test_archivos.cpp
+        configuracionjuego.cpp configuraciondaofiletxt.cpp partidadaofiletxt.cpp fabricaia.cpp
+        Partida.cpp MotorCombate.cpp ConfiguracionDanio.cpp carta.cpp
+        jugador.cpp jugadorhumano.cpp jugadoria.cpp
+        claseiabasica.cpp claseiaintermedia.cpp claseiaavanzada.cpp
+    )
+    target_link_libraries(test_archivos PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+endif()
 
 set_target_properties(TPpoo2da PROPERTIES
     ${BUNDLE_ID_OPTION}

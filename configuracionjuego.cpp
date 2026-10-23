@@ -2,36 +2,36 @@
 
 ConfiguracionJuego::ConfiguracionJuego()
 {
-    m_cantidadCartas = 5;
-    m_ia = "Aleatoria";
+    this->cantidadCartas = 5;
+    this->ia = "Aleatoria";
 }
 
-int ConfiguracionJuego::obtenerCantidadCartas() const
+int ConfiguracionJuego::getCantidadCartas() const
 {
-    return m_cantidadCartas;
+    return this->cantidadCartas;
 }
 
 void ConfiguracionJuego::setCantidadCartas(int cantidad)
 {
-    m_cantidadCartas = cantidad;
+    this->cantidadCartas = cantidad;
 }
 
-std::string ConfiguracionJuego::obtenerIA() const
+const std::string &ConfiguracionJuego::getIA() const
 {
-    return m_ia;
+    return this->ia;
 }
 
 void ConfiguracionJuego::setIA(const std::string &ia)
 {
-    m_ia = ia;
+    this->ia = ia;
 }
 
-ConfiguracionDanio &ConfiguracionJuego::obtenerDanio()
+ConfiguracionDanio &ConfiguracionJuego::getDanio()
 {
-    return m_danio;
+    return this->danio;
 }
 
-const ConfiguracionDanio &ConfiguracionJuego::obtenerDanio() const
+const ConfiguracionDanio &ConfiguracionJuego::getDanio() const
 {
-    return m_danio;
+    return this->danio;
 }
